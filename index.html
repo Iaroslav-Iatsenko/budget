@@ -1,0 +1,139 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Budget</title>
+<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+<div id="container">
+	<h1>My Awesome Budget App</h1>
+	<br>
+	<br>
+	<table id="table1">
+		<th colspan="2">Budget Table</th>
+		<tr class="positive">
+			<td>100</td> <td>Income from Upwork</td>
+		</tr>
+		<tr class="negative">
+			<td>-90</td> <td>Dentist appointment</td>
+		</tr>
+		<tr class="sumup hidden">
+			<td>10</td> <td>Income from</td>
+		</tr>
+		<tr>
+			<td>10</td> <td>Total</td>
+		</tr>
+	</table>
+	<p>Amount,$</p>
+	<div id="panel">
+		<div id="input_form_pointers">
+			<input id="input_number" type="text" value="1"></input>
+			<div id="pointers">
+				<img onclick="increaseInput()" src="img/up.jpg"/>
+				<img onclick="decreaceInput()" src="img/down.jpg"/>
+			</div>
+		</div>
+		<div id="right-panel">	
+			<input id="input_text" type="textbox" placeholder="Enter purpose/source" ></input>
+			<button id="add_button" onCLick=Addnewrow()>Add</button>
+			<button id="sumupbutton" onCLick=SumUp()>Sum Up</button>
+		</div>	
+		<br/>
+		<input type="text" id="text-to-find" value="" placeholder="Enter seach word">
+		<button id="search" onclick="FindOnPage()" value="Искать">Search</button>
+		
+	
+	</div>
+</div>
+
+    <script type="text/javascript">
+    function Addnewrow()
+	{
+		if(document.getElementById("input_text").value.length==0 || document.getElementById("input_number").value.length==0)
+			{alert("please, enter item description");
+		} else {
+		
+			var table = document.getElementById("table1");  
+			var row = table.insertRow(table.rows.length-2); 
+			var cell1 = row.insertCell(0);
+			var cell2 = row.insertCell(1);
+			var i=0;
+			var j=2;
+			var len=table.rows.length;
+			cell1.innerHTML=document.getElementById("input_number").value;
+			cell2.innerHTML=document.getElementById("input_text").value;
+			if (cell1.innerHTML>0){
+			row.className = "positive";
+			};
+			if (cell1.innerHTML<0){
+			row.className = "negative";
+			};
+			for (j=2;j<len-1;j++)
+				{
+				 i+=Number(table.rows[j].cells.item(0).innerHTML);
+				};
+			table.rows.item(len-1).cells.item(0).innerHTML = i;
+		}
+	}
+	function SumUp()
+	{
+		var j=2;
+		var table = document.getElementById("table1");
+		var len=table.rows.length;
+		var months = new Array("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Augt", "Sep", "Oct", "Nov", "Dec"); 
+		var d = new Date();
+        var n = "Sum up (" + months[d.getMonth()]+" " + d.getUTCDate() + ", " + d.getUTCFullYear() + ")"; 
+		
+		table.rows.item(1).cells.item(1).innerHTML=n;
+		table.rows.item(1).cells.item(0).innerHTML=table.rows.item(len-1).cells.item(0).innerHTML;
+		if (table.rows.item(1).cells.item(0).innerHTML>0)
+			{table.rows.item(1).className = "sumup positive";}
+		else if (table.rows.item(1).cells.item(0).innerHTML<0)
+			{table.rows.item(1).className = "sumup negative";}
+		else {table.rows.item(1).className= "sumup";}
+		for (j=2;j<len-1;j++)
+		{
+			table.rows.item(j).className = "hidden";
+		};
+		
+	}
+	function increaseInput() {
+		var input = document.getElementById("input_number");
+        var num=Number(input.value);
+		input.value=num+1;
+		}
+	function decreaceInput() {
+		var input = document.getElementById("input_number");
+        var num=Number(input.value);
+		input.value=num-1;
+		}
+	var table = document.getElementById("table1");
+	var lastResFind="";
+	function FindOnPage() {
+		var	textToFind = window.document.getElementById("text-to-find").value;
+		for (i=1;i<table.rows.length-2;i++)
+			{
+			table.rows.item(i).cells.item(1).innerHTML = table.rows.item(i).cells.item(1).innerHTML.replace("<a name="+lastResFind+" style='background:red'>"+lastResFind+"</a>","lastResFind");//стираем предыдущие якори для скрола
+			};
+		if (textToFind == "") {
+			alert("Please, enter search word");
+		};
+		console.log(table.innerHTML.indexOf(textToFind));
+		
+		if(table.innerHTML.indexOf(textToFind)=="-1")
+		{alert("Nothing has found");
+		} else {
+		for (i=1;i<table.rows.length-2;i++)
+			{
+				table.rows.item(i).cells.item(1).innerHTML = table.rows.item(i).cells.item(1).innerHTML.replace(eval("/"+textToFind+"/gi"),"<a name="+textToFind+" style='background:red'>"+textToFind+"</a>"); //Заменяем найденный текст ссылками с якорем;	
+			};
+			lastResFind=textToFind; 
+		}	
+		}
+
+		
+    </script>
+</body>
+
+</html>
