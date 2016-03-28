@@ -12,14 +12,14 @@
 	<br>
 	<table id="table1">
 		<th colspan="2">Budget Table</th>
-		<tr class="positive">
+		<tr class="sumup hidden">
+			<td>10</td> <td>Here would be income</td>
+		</tr>
+		<tr class="positive" onclick="selecteditem(this)" >
 			<td>100</td> <td>Income from Upwork</td>
 		</tr>
-		<tr class="negative">
+		<tr class="negative" onclick="selecteditem(this)">
 			<td>-90</td> <td>Dentist appointment</td>
-		</tr>
-		<tr class="sumup hidden">
-			<td>10</td> <td>Income from</td>
 		</tr>
 		<tr>
 			<td>10</td> <td>Total</td>
@@ -42,7 +42,8 @@
 		<br/>
 		<input type="text" id="text-to-find" value="" placeholder="Enter seach word">
 		<button id="search" onclick="FindOnPage()" value="Искать">Search</button>
-		
+		<br/>
+		<button id="deleteElem" onclick="DeleteElement()">Delete selected element</button>
 	
 	</div>
 </div>
@@ -68,6 +69,9 @@
 			};
 			if (cell1.innerHTML<0){
 			row.className = "negative";
+			};
+			row.onclick = function(e){
+			selecteditem(this);
 			};
 			for (j=2;j<len-1;j++)
 				{
@@ -130,9 +134,43 @@
 			};
 			lastResFind=textToFind; 
 		}	
-		}
-
+		};
+    function selecteditem(Element) {
 		
+		var len=table.rows.length;
+		if (Element.className=="selected")
+		{ 
+			if (Element.cells.item(0).innerHTML>0){
+				Element.className = "positive";
+			};
+			if (Element.cells.item(0).innerHTML<0){
+				Element.className = "negative";
+			};
+		} else {
+				for (j=1;j<len-2;j++)
+				{
+					if (table.rows.item(j).cells.item(0).innerHTML>0){
+						table.rows.item(j).className = "positive";
+					};
+					if (table.rows.item(j).cells.item(0).innerHTML<0){
+						table.rows.item(j).className = "negative";
+					}; 
+				};
+				Element.className = "selected";
+		}
+		
+	} 
+	function DeleteElement() {
+		var len=table.rows.length;
+		for (j=1;j<len-2;j++){
+			if (table.rows.item(j).className == "selected")
+			{
+				table.deleteRow(j);
+			};
+		
+		
+		}
+	}	
     </script>
 </body>
 
