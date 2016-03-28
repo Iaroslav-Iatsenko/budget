@@ -15,3 +15,4 @@ Button Sum Up would result in total amount as of current day
 
 Elements of table are highlighted in green (positive) or red(negative)
 
+You could delete item by selecting it and press button Delete
