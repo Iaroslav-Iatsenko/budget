@@ -19,6 +19,9 @@ h1 {
 .negative {
 	background-color: #f7cecb; 
 }
+.selected {
+	background-color: grey;
+}
 tr {
 	font-size: 18px;
 	font-weight: bold;
@@ -155,4 +158,18 @@ img {
 }
 #text-to-find {
 	height: 37px;
+}
+#deleteElem {
+	display: inline-block;
+	color: white;
+	background-color: #008bfe;
+	height: 37px;
+	width: 190px;
+	border-radius: 10px;
+	border: 1px solid #787878;
+	font-size: 15px;
+	font-weight: bold;
+	margin-top: 10px;
+	
+	
 }
