@@ -13,7 +13,7 @@
 	<table id="table1">
 		<th colspan="2">Budget Table</th>
 		<tr class="sumup hidden">
-			<td>10</td> <td>Here would be income</td>
+			<td>0</td> <td>Here would be income</td>
 		</tr>
 		<tr class="positive" onclick="selecteditem(this)" >
 			<td>100</td> <td>Income from Upwork</td>
@@ -56,7 +56,7 @@
 		} else {
 		
 			var table = document.getElementById("table1");  
-			var row = table.insertRow(table.rows.length-2); 
+			var row = table.insertRow(table.rows.length-1); 
 			var cell1 = row.insertCell(0);
 			var cell2 = row.insertCell(1);
 			var i=0;
@@ -73,7 +73,7 @@
 			row.onclick = function(e){
 			selecteditem(this);
 			};
-			for (j=2;j<len-1;j++)
+			for (j=1;j<len-1;j++)
 				{
 				 i+=Number(table.rows[j].cells.item(0).innerHTML);
 				};
@@ -98,7 +98,7 @@
 		else {table.rows.item(1).className= "sumup";}
 		for (j=2;j<len-1;j++)
 		{
-			table.rows.item(j).className = "hidden";
+			table.deleteRow(2);
 		};
 		
 	}
@@ -147,7 +147,7 @@
 				Element.className = "negative";
 			};
 		} else {
-				for (j=1;j<len-2;j++)
+				for (j=2;j<len-1;j++)
 				{
 					if (table.rows.item(j).cells.item(0).innerHTML>0){
 						table.rows.item(j).className = "positive";
@@ -162,14 +162,18 @@
 	} 
 	function DeleteElement() {
 		var len=table.rows.length;
-		for (j=1;j<len-2;j++){
+		for (j=2;j<len-1;j++){
 			if (table.rows.item(j).className == "selected")
-			{
+				{
 				table.deleteRow(j);
+				}
 			};
-		
-		
-		}
+		var i=0;	
+		for (j=1;j<table.rows.length-1;j++)
+			{
+			 i+=Number(table.rows[j].cells.item(0).innerHTML);
+			};
+			table.rows.item(table.rows.length-1).cells.item(0).innerHTML = i;		
 	}	
     </script>
 </body>
